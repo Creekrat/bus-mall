@@ -3,6 +3,7 @@
 
 
 var totalClicks = 0;
+var maxClicks = 25;
 var imageArray = [];
 
 function Product (name,image) {
@@ -13,7 +14,7 @@ function Product (name,image) {
 }
 
 
-document.getElementById('img1').src = 'images/bubblegum.jpg';
+
 
 
 imageArray[0] = new Product('bag','images/bag.jpg');
@@ -55,7 +56,29 @@ document.getElementById('img1').src = product1.image;
 document.getElementById('img2').src = product2.image;
 document.getElementById('img3').src = product3.image;
 
-for (var i = 0; i < imageArray.length; i++) {
- 
+var img1 = document.getElementById('img1');
+var img2 = document.getElementById('img2');
+var img3 = document.getElementById('img3');
+
+img1.addEventlistener('click',handleVote);
+img2.addEventlistener('click',handleVote);
+img3.addEventlistener('click',handleVote);
+
+function handleVote(event) {
+  event.preventDefault();
+
+  var clickedItem = event.target.attributes[1].value;
+
+  for (var i = 0; i < imageArray.length; i++){
+    if (clickedItem === imageArray[i].image) {
+      imageArray[i].votes++;
+      console.log(imageArray[i]);
+    }
+  }
+  if (totalClicks === maxClicks){
+    img1.removeEventListener('click',handleVote());
+  }
+
 }
+handleVote();
 
